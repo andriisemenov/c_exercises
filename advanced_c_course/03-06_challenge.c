@@ -39,4 +39,6 @@ int main()
         printf("%d ", primes[i]);
     }
     printf("\n");
+
+    return (0);
 }

@@ -7,6 +7,7 @@
 
 int main(void)
 {
+    char *text = "Hello, this is Andrii\n"; //Alternative way. Then text can be used directly as a pointer
     char *ps;
     int characters = 0;
     char string_array[MAX_INPUT];

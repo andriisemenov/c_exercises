@@ -1,0 +1,1 @@
+extern unsigned int hysteresis(unsigned int input_percent);

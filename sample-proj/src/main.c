@@ -42,30 +42,30 @@ int main(int argc, char **argv)
     // }
 
 
-    // printf("*************Ascending*********************\n");
-    // for(int i=0; i<=100; i++)
-    // {
-
-    //     printf("Input %d Output %d ", i, hysteresis(i));
-    //     printf("\n");
-    // }
-    // printf("*******************Descending********************\n");
-    // for(int i=100; i>=0; i--)
-    // {
-    //     printf("Input %d Output %d ", i, hysteresis(i));
-    //     printf("\n");
-    // }
-
-    printf("*******************Wobbly stuff********************\n");
-    int h = 1;
+    printf("*************Ascending*********************\n");
     for(int i=0; i<=100; i++)
-    {   
-        int r = rand()%3;
+    {
 
-        printf("Input %d Output %d ", 13+(r*h), hysteresis(13+(r*h)));
-        h*=-1;
+        printf("Input %d Output %d ", i, hysteresis(i));
         printf("\n");
     }
+    printf("*******************Descending********************\n");
+    for(int i=100; i>=0; i--)
+    {
+        printf("Input %d Output %d ", i, hysteresis(i));
+        printf("\n");
+    }
+
+    // printf("*******************Wobbly stuff********************\n");
+    // int h = 1;
+    // for(int i=0; i<=100; i++)
+    // {   
+    //     int r = rand()%3;
+
+    //     printf("Input %d Output %d ", 13+(r*h), hysteresis(13+(r*h)));
+    //     h*=-1;
+    //     printf("\n");
+    // }
 
     return (0);
 }

@@ -4,8 +4,9 @@
 * Used as module. hysteresis.h consists of "extern unsigned int hysteresis(unsigned int input_percent);"
 * Using math instead of hard-defined start/stop array of the levels for scalability.
 * The idea is to calculate the offset to the first critical section and substract this point(10) from the signal.
-* Then the base level is calculated. If the signal is higher then the hysteresis, then base_level+1;
+* Then the base level is calculated. If the signal is higher then the hysteresis + base_level, then level = base_level+1;
 * 
+*
 */
 
 #include "hysteresis.h"
@@ -21,7 +22,6 @@
 #define HYSTERESIS_SCALED (HYSTERESIS<<SCALE)
 #define MAX_INPUT_SCALED ( MAX_INPUT << SCALE )
 #define INP_PER_LEVEL ( MAX_INPUT_SCALED / LEVELS )
-#define INP_PER_SUBLEVEL ( MAX_INPUT_SCALED / SUB_LEVELS )
 #define HYSTERESIS_SCALED_HALF  ( HYSTERESIS_SCALED/ 2u )
 
 #define OFFSET_SCALED  ( (MAX_INPUT_SCALED / SUB_LEVELS) - HYSTERESIS_SCALED_HALF)
@@ -49,15 +49,15 @@ unsigned int hysteresis( unsigned int input_percent )
         input_percent_scaled = 0;
     }
 
-    ui_level = (input_percent_scaled / INP_PER_LEVEL);
+    unsigned int ui_baseLevel = (input_percent_scaled / INP_PER_LEVEL);
 
     if( ui_prevInput < input_percent )
     {
         /*Ascending*/
-        if( input_percent_scaled < ( ui_level * INP_PER_LEVEL + HYSTERESIS_SCALED ) )
+        if( input_percent_scaled < ( ui_baseLevel * INP_PER_LEVEL + HYSTERESIS_SCALED ) )
         {
             /*Within the boundary, use level*/
-            if(ui_prevOutput > ui_level)
+            if(ui_prevOutput > ui_baseLevel)
             {
                 /*Unless we were already higher then the higher boundary, then output previous level
                 *
@@ -69,27 +69,34 @@ unsigned int hysteresis( unsigned int input_percent )
                 */
                 ui_level = ui_prevOutput;
             }
-        }
-        else
-        {
-            /*more than hysteresis for this level, level+1*/
-            ui_level += 1;
-        }
-    }
-    else if( ui_prevInput > input_percent ){
-        /*Descending*/
-        if( input_percent_scaled < ( ui_level * INP_PER_LEVEL + HYSTERESIS_SCALED ) )
-        {
-            /*Exclude start of critical area on descend*/
-            if( input_percent_scaled != ( ui_level * INP_PER_LEVEL ) && ui_prevOutput != ui_level )
+            else
             {
-                ui_level += 1;
+                ui_level = ui_baseLevel;
             }
         }
         else
         {
-            ui_level += 1;
-            // printf("Previous output");
+            /*more than hysteresis for this level, level+1*/
+            ui_level = ui_baseLevel + 1;
+        }
+    }
+    else if( ui_prevInput > input_percent ){
+        /*Descending*/
+        if( input_percent_scaled < ( ui_baseLevel * INP_PER_LEVEL + HYSTERESIS_SCALED ) )
+        {
+            /*Exclude start of critical area on descend*/
+            if( input_percent_scaled != ( ui_baseLevel * INP_PER_LEVEL ) && ui_prevOutput != ui_baseLevel )
+            {
+                ui_level = ui_baseLevel + 1;
+            }
+            else
+            {
+                ui_level = ui_baseLevel;
+            }
+        }
+        else
+        {
+            ui_level = ui_baseLevel + 1;
         }
     }
     else

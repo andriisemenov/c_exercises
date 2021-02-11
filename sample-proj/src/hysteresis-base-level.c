@@ -2,7 +2,7 @@
 *
 * Author: Andrii Semenov
 * Used as module. hysteresis.h consists of "extern unsigned int hysteresis(unsigned int input_percent);"
-* Using math instead of hard-defined start/stop array of the levels for scalability, different amout of levels and signal resolutions.
+* Using math instead of hard-defined start/stop array of the levels for scalability (different amount of levels and signal resolutions)
 * The idea is to calculate the offset to the first critical section and substract this point(10) from the signal.
 * Then the base level is calculated. If the signal is higher then the hysteresis + base_level, then level = base_level+1;
 * There is comparison made with previous output to stabilize changes in critical (swing areas). 

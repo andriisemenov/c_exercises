@@ -63,10 +63,6 @@ unsigned int hysteresis( unsigned int input_percent )
                 {
                     ui_level--;
                 }
-                if(ui_level>ui_prevOutput || ui_level<0 || ui_level>4)
-                {
-                    printf("Strange %d %d %d %d\n", ui_prevInput, input_percent, ui_prevOutput, ui_level);
-                }
             }
             else
             {

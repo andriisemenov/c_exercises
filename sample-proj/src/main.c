@@ -12,35 +12,35 @@ int main(int argc, char **argv)
     srand(time(NULL));
     signed int input = 20;
     signed int previnput = 20;
-    // FILE *fp;
+    FILE *fp;
 
-    // fp = fopen("test.csv", "w+");
-    // printf("*************Random*********************\n");
-    // for(int i=0; i<=10000; i++)
-    // {
+    fp = fopen("test.csv", "w+");
+    printf("*************Random*********************\n");
+    for(int i=0; i<=10000; i++)
+    {
         
-    //     int r = rand()%2;
-    //     if(r)
-    //     {
-    //         input+=rand()%7;
-    //     }
-    //     else
-    //     {
-    //         input-=rand()%7;
-    //     }
-    //     if(input>100)
-    //     {
-    //         input = 100u;
-    //     }
-    //     else if(input<0)
-    //     {
-    //         input = 0u;
-    //     }
-    //     hysteresis((unsigned int)input);
-    //     // fprintf(fp,"%d, %d, %d ", input, hysteresis((unsigned int)input));
-    //     // fprintf(fp,"\n");
-    //     // usleep(100000);
-    // }
+        int r = rand()%2;
+        if(r)
+        {
+            input+=rand()%7;
+        }
+        else
+        {
+            input-=rand()%7;
+        }
+        if(input>100)
+        {
+            input = 100u;
+        }
+        else if(input<0)
+        {
+            input = 0u;
+        }
+        // hysteresis((unsigned int)input);
+        fprintf(fp,"%d, %d ", input, hysteresis((unsigned int)input));
+        fprintf(fp,"\n");
+        // usleep(100000);
+    }
 
 
     printf("*************Ascending*********************\n");
